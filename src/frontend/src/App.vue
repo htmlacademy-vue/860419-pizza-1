@@ -1,32 +1,23 @@
 <template>
   <div id="app">
-    <div class="main">
-      <div class="main__wrapper">
-        <div class="main__header">
-          <img
-            src="@/assets/img/logo.svg"
-            width="300"
-            height="47"
-            alt="V!U!E! Pizza"
-          />
-        </div>
-        <h1>Добро пожаловать!</h1>
-        <p>
-          Это проект V!U!E! Pizza для обучения на профессиональном
-          онлайн‑курсе<br />
-          <b>«Vue.js для опытных разработчиков».</b>
-        </p>
-      </div>
-    </div>
+    <component :is="layout">
+      <router-view />
+    </component>
   </div>
 </template>
 
 <script>
 export default {
   name: "App",
+  computed: {
+    layout() {
+      const layoutName = this.$route.meta.layout || "DefaultLayout";
+      return () => import(`@/layouts/${layoutName}.vue`);
+    },
+  },
 };
 </script>
 
 <style lang="scss">
-@import "~@/assets/scss/app";
+@import "./assets/scss/app";
 </style>
